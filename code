@@ -1,0 +1,17 @@
+import random
+elements = ["rock🪨" , "paper📃" , "scissor✂️"]
+while True:
+    user = int(input("1. rock🪨\n2. paper📃\n3. scissor✂️\n4. exit❌\n: "))
+    if user == 4:
+        print("Thank you🥳\nBye Bye 🎈🤗 ")
+        break
+    user = elements[user-1]
+    comp = random.choice(elements)
+    print(f"Computer chooses {comp}")
+    if (comp == elements[0] and user == elements[1]) or (comp == elements[1] and user == elements[2]) or (comp == elements[2] and user == elements[0]):
+        print("You win 🥳🥳")
+    elif comp == user:
+        print("OO same same 🫨\nTry again ➰")
+    else:
+        print("Try again ➰")
+    
