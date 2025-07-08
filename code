@@ -1,17 +1,33 @@
 import random
 elements = ["rock🪨" , "paper📃" , "scissor✂️"]
+comp_win , user_win , draw ,  total = 0 , 0 , 0 , 0
 while True:
-    user = int(input("1. rock🪨\n2. paper📃\n3. scissor✂️\n4. exit❌\n: "))
-    if user == 4:
+    while True:
+       user = input("1. rock🪨\n2. paper📃\n3. scissor✂️\n4. exit❌\n: ")
+       if user  in ["1" , "2" , "3" , "4"]:
+           break
+    if user == "4":
+        print(f"Total matches : {total}\n")
+        print(f"You win {user_win} matches\nYou loses {total - comp_win - draw} matches")
+        if draw != 0:
+            print(f"Draw matches : {draw}")
+        print(f"Computer win {comp_win} matches\nComputer loses {total - user_win - draw} matches\n")
         print("Thank you🥳\nBye Bye 🎈🤗 ")
         break
-    user = elements[user-1]
+    user = elements[int(user)-1]
     comp = random.choice(elements)
-    print(f"Computer chooses {comp}")
+    print(f"\nComputer choice {comp}")
+    print(f"Your choice {user}")
     if (comp == elements[0] and user == elements[1]) or (comp == elements[1] and user == elements[2]) or (comp == elements[2] and user == elements[0]):
-        print("You win 🥳🥳")
+        print("You win 🥳🥳\n")
+        total += 1
+        user_win += 1
     elif comp == user:
-        print("OO same same 🫨\nTry again ➰")
+        print("OO same same 🫨\nTry again ➰\n")
+        total += 1
+        draw += 1
     else:
-        print("Try again ➰")
+        print("Computer wins \nTry again➰\n")
+        comp_win += 1
+        total += 1
     
