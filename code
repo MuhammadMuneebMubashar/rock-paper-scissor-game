@@ -1,33 +1,75 @@
 import random
-elements = ["rock🪨" , "paper📃" , "scissor✂️"]
-comp_win , user_win , draw ,  total = 0 , 0 , 0 , 0
-while True:
+
+def comp_choice(elements):
+  return random.choice(elements)
+
+def user_input(statement, ranges=(0, 1)):
+  while True:
+    try:
+      userChoice = int(input(statement))
+      if ranges[0] <= userChoice <= ranges[1]:
+        return userChoice
+      else:
+        print("Please consider the range 🫨")
+    except:
+      print("Pleasa enter numbers only ⚠️")
+
+def result_msg(total, draw, userWin):
+  print(f"\nTotal matches : {total}", end=" ")
+  if userWin != 0:
+    print(f" Win matches : {userWin} 🎈 Draw matches : {draw} Lose matches : {total - userWin - draw}\n")
+  else:
+    print(f" Win matches : {userWin} 😓 Draw matches : {draw} Lose matches : {total - userWin - draw}\n")
+
+def display_choices(compChoice, userChoice):
+  print(f"\nComputer choice {compChoice}")
+  print(f"Your choice {userChoice}\n")
+
+def check_winner(elements, userChoice, compChoice):
+  if (compChoice == elements[0] and userChoice == elements[1]) or \
+     (compChoice == elements[1] and userChoice == elements[2]) or \
+     (compChoice == elements[2] and userChoice == elements[0]):
+    return "user"
+  elif compChoice == userChoice:
+    return "draw"
+  else:
+    return "comp"
+
+def winner_msg(winner, userWin, draw):
+  if winner == "user":
+    print("You win 🥳🥳\n")
+    userWin += 1
+  elif winner == "comp":
+    print("Computer wins \nTry again➰\n")
+  else:
+    print("OO same same 🫨\nTry again ➰\n")
+    draw += 1
+  return userWin, draw
+
+def game():
+  while True:
+    elements = ("rock🪨", "paper📃", "scissor✂️")
+    userWin, draw, total = 0, 0, 0
     while True:
-       user = input("1. rock🪨\n2. paper📃\n3. scissor✂️\n4. exit❌\n: ")
-       if user  in ["1" , "2" , "3" , "4"]:
-           break
-    if user == "4":
-        print(f"Total matches : {total}\n")
-        print(f"You win {user_win} matches\nYou loses {total - comp_win - draw} matches")
-        if draw != 0:
-            print(f"Draw matches : {draw}")
-        print(f"Computer win {comp_win} matches\nComputer loses {total - user_win - draw} matches\n")
-        print("Thank you🥳\nBye Bye 🎈🤗 ")
+      userChoice = user_input(
+        "__________\n1. rock🪨\n2. paper📃\n3. scissor✂️\n4. Exit Current game ❌\n__________\nChoice: ",
+        (1, 4)
+      )
+      if userChoice == 4:
+        result_msg(total, draw, userWin)
         break
-    user = elements[int(user)-1]
-    comp = random.choice(elements)
-    print(f"\nComputer choice {comp}")
-    print(f"Your choice {user}")
-    if (comp == elements[0] and user == elements[1]) or (comp == elements[1] and user == elements[2]) or (comp == elements[2] and user == elements[0]):
-        print("You win 🥳🥳\n")
-        total += 1
-        user_win += 1
-    elif comp == user:
-        print("OO same same 🫨\nTry again ➰\n")
-        total += 1
-        draw += 1
-    else:
-        print("Computer wins \nTry again➰\n")
-        comp_win += 1
-        total += 1
-    
+      userChoice = elements[userChoice - 1]
+      compChoice = comp_choice(elements)
+      display_choices(compChoice, userChoice)
+      winner = check_winner(elements, userChoice, compChoice)
+      userWin, draw = winner_msg(winner, userWin, draw)
+      total += 1
+    playAgain = user_input(
+      "Do you wanto play another round 🥳?\nPress 1 to Play again 🎈\nPress 0 to exit ⭕: ",
+      (0, 1)
+    )
+    if playAgain == 0:
+      print("Thank you🥳\nBye Bye 🎈🤗 ")
+      return
+      
+game()
